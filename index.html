@@ -396,7 +396,40 @@ function open(type){
       h+=`<div class="card ${cur?"active":""}"><div class="c-left"><div class="c-ico">${L.emoji}</div><div class="c-info">
         <h4>${L.name} ${cur?"✓":""}</h4><p>×${L.mult}${u?"":" · "+fmt(L.cost)}</p></div></div>
         <button class="btn" onclick="buyLoc(${L.id})">${u?(cur?"Здесь":"Выбрать"):"Открыть"}</button></div>`;
-    });
+    });if(type==="top"){
+  h = `<div class="m-head">
+        <div class="m-title">🏆 Рейтинг Borsuk Coin</div>
+        <button class="x" onclick="closeM()">✕</button>
+      </div>`;
+
+  if(S.registered && S.nick){
+    h += `
+      <div style="text-align:center;margin-bottom:18px;">
+        <div style="font-size:13px;color:#a0aec0;margin-bottom:6px;">Твоя позиция</div>
+        <div class="lb-row me" style="max-width:100%;margin:0 auto;">
+          <div class="lb-rank">1</div>
+          <div class="lb-name">${S.nick}</div>
+          <div class="lb-score">${fmt(S.coins)} 🪙</div>
+        </div>
+      </div>
+
+      <div style="background:rgba(241,196,15,0.08);border:1px solid rgba(241,196,15,0.25);border-radius:14px;padding:14px;margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:700;color:#f1c40f;margin-bottom:6px;">Скоро здесь будут другие</div>
+        <div style="font-size:12px;color:#a0aec0;line-height:1.45;">
+          После запуска токена <b>$BORSUK</b> рейтинг станет общим.<br>
+          Друзья смогут регистрироваться и попадать в топ.
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:#718096;text-align:center;">
+        Сейчас рейтинг локальный • твой прогресс сохранён
+      </div>`;
+  } else {
+    h += `<div class="empty">
+            Войди в аккаунт,<br>чтобы попасть в рейтинг
+          </div>`;
+  }
+}
   }
   if(type==="skin"){
     h=`<div class="m-head"><div class="m-title">👕 Скины</div><button class="x" onclick="closeM()">✕</button></div>
