@@ -7,277 +7,208 @@
   <title>Borsuk Coin</title>
   <style>
     :root {
-      --bg1: #ffeaa7;
-      --bg2: #fff9f0;
-      --bg3: #fdcb6e;
-      --card: rgba(255,255,255,0.92);
-      --text: #2d3436;
-      --soft: #636e72;
-      --accent: #e67e22;
-      --accent2: #f39c12;
+      --bg1:#1a1a2e; --bg2:#16213e; --bg3:#0f3460;
+      --accent:#f1c40f; --accent2:#e67e22;
+      --text:#fff; --soft:#a0aec0;
     }
-    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
-    html, body { height:100%; overflow:hidden; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }
-    body { display:flex; justify-content:center; align-items:center; background:#0f0f0f; }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+    html,body{height:100%;overflow:hidden;font-family:system-ui,-apple-system,sans-serif;background:#0a0a0a}
+    body{display:flex;justify-content:center;align-items:center}
 
-    .phone {
-      width:100%; max-width:420px; height:100%; max-height:880px;
-      position:relative; overflow:hidden; display:flex; flex-direction:column;
-      background: linear-gradient(165deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%);
-      box-shadow: 0 0 60px rgba(230,126,34,0.15);
-      transition: background 0.6s ease;
+    .phone{
+      width:100%;max-width:420px;height:100%;max-height:880px;
+      position:relative;overflow:hidden;display:flex;flex-direction:column;
+      background:radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, #0f0f1a 70%);
     }
 
-    /* ===== AUTH ===== */
-    .auth {
-      position:absolute; inset:0; z-index:100;
-      background: linear-gradient(160deg, #f39c12 0%, #e67e22 50%, #d35400 100%);
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      padding:32px 24px; text-align:center;
+    /* SPLASH / AUTH */
+    .auth{
+      position:absolute;inset:0;z-index:100;
+      background:radial-gradient(circle at 50% 30%, #2d1b4e 0%, #0a0a15 70%);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:30px 24px;text-align:center;
     }
-    .auth.hide { display:none; }
-    .auth-beaver {
-      width:120px; height:120px; margin-bottom:16px;
-      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.25));
-      animation: floaty 2.5s ease-in-out infinite;
+    .auth.hide{display:none}
+    .auth-img{
+      width:180px;height:180px;border-radius:50%;
+      object-fit:cover;border:4px solid rgba(241,196,15,0.5);
+      box-shadow:0 0 40px rgba(241,196,15,0.3),0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom:20px;animation:pulse 2.5s ease-in-out infinite;
     }
-    @keyframes floaty {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes pulse{
+      0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(241,196,15,0.25)}
+      50%{transform:scale(1.04);box-shadow:0 0 50px rgba(241,196,15,0.45)}
     }
-    .auth h1 {
-      font-size:30px; font-weight:900; color:#fff;
-      text-shadow: 0 4px 16px rgba(0,0,0,0.25); letter-spacing:-0.5px;
+    .auth h1{font-size:28px;font-weight:900;color:#f1c40f;text-shadow:0 0 20px rgba(241,196,15,0.4)}
+    .auth .sub{color:#a0aec0;font-size:14px;margin:10px 0 26px;line-height:1.4}
+    .auth input{
+      width:100%;max-width:280px;padding:15px 18px;border:2px solid rgba(241,196,15,0.3);
+      border-radius:16px;font-size:15px;font-weight:600;text-align:center;margin-bottom:14px;
+      background:rgba(255,255,255,0.08);color:#fff;outline:none;
     }
-    .auth .sub {
-      color: rgba(255,255,255,0.9); font-size:14px; margin:10px 0 28px; line-height:1.4;
-    }
-    .auth input {
-      width:100%; max-width:280px; padding:15px 18px; border:none; border-radius:16px;
-      font-size:15px; font-weight:600; text-align:center; margin-bottom:14px;
-      background:#fff; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-      outline:none;
-    }
-    .auth button {
-      width:100%; max-width:280px; padding:15px; border:none; border-radius:16px;
-      background:#2d3436; color:#fff; font-size:15px; font-weight:800; cursor:pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25); transition: transform 0.15s, background 0.15s;
-    }
-    .auth button:active { transform: scale(0.97); background:#1e272e; }
-
-    /* ===== HEADER ===== */
-    .header {
-      padding:14px 16px 8px; display:flex; justify-content:space-between; align-items:center;
-      z-index:10;
-    }
-    .logo {
-      font-size:18px; font-weight:900;
-      background: linear-gradient(90deg, #d35400, #e67e22);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      letter-spacing:-0.3px;
-    }
-    .user-btn {
-      background: var(--card); border: none; border-radius:40px;
-      padding:7px 12px; font-size:12px; font-weight:700;
-      display:flex; align-items:center; gap:6px; cursor:pointer;
-      box-shadow: 0 4px 14px rgba(230,126,34,0.12);
-      backdrop-filter: blur(8px);
+    .auth input::placeholder{color:#718096}
+    .auth button{
+      width:100%;max-width:280px;padding:15px;border:none;border-radius:16px;
+      background:linear-gradient(135deg,#f1c40f,#e67e22);color:#1a1a2e;
+      font-size:16px;font-weight:800;cursor:pointer;
+      box-shadow:0 6px 20px rgba(241,196,15,0.35);
     }
 
-    /* ===== STATS ===== */
-    .stats { padding:0 16px 10px; }
-    .row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-    .coin-ico {
-      width:40px; height:40px; border-radius:50%;
-      background: linear-gradient(135deg, #f1c40f, #e67e22);
-      display:flex; align-items:center; justify-content:center; font-size:18px;
-      box-shadow: 0 4px 12px rgba(230,126,34,0.35);
-    }
-    .coins { font-size:24px; font-weight:900; color:#d35400; letter-spacing:-0.5px; }
-    .sub { font-size:11px; color:var(--soft); font-weight:600; margin-top:1px; }
-    .bar {
-      background: rgba(255,255,255,0.7); border-radius:40px; height:24px; overflow:hidden;
-      border: 2px solid rgba(26,188,156,0.25); position:relative;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
-    }
-    .bar-fill {
-      height:100%; background: linear-gradient(90deg, #1abc9c, #2ecc71);
-      border-radius:40px; transition: width 0.35s ease;
-    }
-    .bar-txt {
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      font-size:11px; font-weight:700; color:#1e272e;
+    /* HEADER */
+    .header{padding:14px 16px 6px;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-size:17px;font-weight:900;color:#f1c40f}
+    .user-btn{
+      background:rgba(255,255,255,0.08);border:1px solid rgba(241,196,15,0.25);
+      border-radius:30px;padding:6px 12px;font-size:12px;font-weight:700;color:#fff;
+      display:flex;align-items:center;gap:5px;cursor:pointer;
     }
 
-    /* ===== TAP ZONE ===== */
-    .zone {
-      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-      position:relative; padding:8px;
+    /* STATS */
+    .stats{padding:0 16px 8px}
+    .row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .coin-ico{
+      width:38px;height:38px;border-radius:50%;
+      background:linear-gradient(135deg,#f1c40f,#e67e22);
+      display:flex;align-items:center;justify-content:center;font-size:18px;
+      box-shadow:0 0 12px rgba(241,196,15,0.4);
     }
-    .combo {
-      position:absolute; top:8px; font-size:16px; font-weight:900; color:#e67e22;
-      opacity:0; transition: opacity 0.2s; text-shadow: 0 2px 8px rgba(230,126,34,0.3);
-      letter-spacing:0.5px;
+    .coins{font-size:24px;font-weight:900;color:#f1c40f}
+    .sub{font-size:11px;color:#a0aec0;font-weight:600}
+    .bar{
+      background:rgba(255,255,255,0.08);border-radius:30px;height:22px;overflow:hidden;
+      border:1px solid rgba(26,188,156,0.3);position:relative;
     }
-    .combo.on { opacity:1; }
-    .auto {
-      position:absolute; top:40px; background:rgba(45,52,54,0.9); color:#fff;
-      font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px;
-      opacity:0; transition: opacity 0.3s; backdrop-filter:blur(4px);
-    }
-    .auto.on { opacity:1; }
+    .bar-fill{height:100%;background:linear-gradient(90deg,#1abc9c,#2ecc71);border-radius:30px;transition:width .3s}
+    .bar-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
 
-    .char-wrap {
-      width:190px; height:190px; border-radius:50%;
-      background: linear-gradient(145deg, #fff5e0, #f39c12);
-      border: 6px solid #fff;
-      display:flex; align-items:center; justify-content:center;
-      box-shadow:
-        0 12px 32px rgba(243,156,18,0.4),
-        0 0 0 8px rgba(255,255,255,0.25),
-        inset 0 -10px 20px rgba(211,84,0,0.12);
-      cursor:pointer; transition: transform 0.08s cubic-bezier(0.2,0.9,0.3,1.2);
-      position:relative; z-index:5; overflow:hidden;
-    }
-    .char-wrap:active, .char-wrap.pressed { transform: scale(0.88); }
-    .char-wrap.tired { filter: grayscale(0.35) brightness(0.92); }
-    .char-wrap svg { width:72%; height:72%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15)); }
+    /* TAP ZONE */
+    .zone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+    .combo{position:absolute;top:6px;font-size:15px;font-weight:900;color:#f1c40f;opacity:0;transition:opacity .2s}
+    .combo.on{opacity:1}
+    .auto{position:absolute;top:36px;background:rgba(0,0,0,0.6);color:#f1c40f;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;opacity:0;transition:opacity .3s}
+    .auto.on{opacity:1}
 
-    .hint {
-      margin-top:16px; font-size:13px; font-weight:600; color:var(--soft);
-      letter-spacing:0.2px;
+    .hero-wrap{
+      width:170px;height:170px;border-radius:50%;
+      border:4px solid rgba(241,196,15,0.5);
+      box-shadow:0 0 30px rgba(241,196,15,0.25),0 8px 24px rgba(0,0,0,0.4);
+      overflow:hidden;cursor:pointer;transition:transform .08s;
+      position:relative;z-index:5;
     }
+    .hero-wrap img{width:100%;height:100%;object-fit:cover}
+    .hero-wrap:active,.hero-wrap.pressed{transform:scale(0.9)}
 
-    .float {
-      position:absolute; font-size:18px; font-weight:800; color:#d35400;
-      pointer-events:none; animation: floatUp 0.8s ease-out forwards; z-index:20;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    .coin-btn{
+      margin-top:18px;width:90px;height:90px;border-radius:50%;
+      background:linear-gradient(145deg,#f1c40f,#e67e22);
+      border:4px solid #fff3;
+      box-shadow:0 0 25px rgba(241,196,15,0.45),inset 0 -6px 12px rgba(0,0,0,0.15);
+      display:flex;align-items:center;justify-content:center;
+      font-size:42px;cursor:pointer;transition:transform .08s;
+      position:relative;z-index:6;
     }
-    @keyframes floatUp {
-      0% { opacity:1; transform: translateY(0) scale(1); }
-      100% { opacity:0; transform: translateY(-95px) scale(1.35); }
-    }
+    .coin-btn:active,.coin-btn.pressed{transform:scale(0.88)}
 
-    /* ===== NAV ===== */
-    .nav {
-      display:grid; grid-template-columns:repeat(5,1fr); gap:6px;
-      padding:10px 10px 24px;
-      background: linear-gradient(180deg, transparent, rgba(255,255,255,0.55));
-    }
-    .nav button {
-      background: var(--card); border:none; border-radius:16px;
-      padding:11px 4px; font-size:10px; font-weight:700; color:var(--text);
-      cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-      backdrop-filter: blur(8px); transition: transform 0.12s;
-    }
-    .nav button span { font-size:20px; }
-    .nav button:active { transform: scale(0.92); }
+    .hint{margin-top:14px;font-size:13px;font-weight:600;color:#a0aec0}
 
-    /* ===== MODAL ===== */
-    .overlay {
-      position:absolute; inset:0; background:rgba(15,15,15,0.45);
-      backdrop-filter: blur(6px); z-index:70;
-      display:none; align-items:flex-end; justify-content:center;
+    .float{
+      position:absolute;font-size:18px;font-weight:800;color:#f1c40f;
+      pointer-events:none;animation:up .75s ease-out forwards;z-index:20;
+      text-shadow:0 0 8px rgba(241,196,15,0.5);
     }
-    .overlay.show { display:flex; }
-    .modal {
-      background:#fff; width:100%; max-height:82%;
-      border-radius:24px 24px 0 0; padding:20px 16px 30px;
-      overflow-y:auto; animation: slideUp 0.28s cubic-bezier(0.2,0.9,0.3,1);
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-    .m-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-    .m-title { font-size:18px; font-weight:900; letter-spacing:-0.3px; }
-    .x {
-      width:32px; height:32px; border-radius:50%; border:none;
-      background:#f1f2f6; font-size:15px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-    }
+    @keyframes up{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-90px) scale(1.3)}}
 
-    .card {
-      background: #fffaf5; border: 1.5px solid #fdebd0;
-      border-radius:16px; padding:13px 14px; margin-bottom:10px;
-      display:flex; align-items:center; justify-content:space-between;
-      transition: border-color 0.2s;
+    /* NAV */
+    .nav{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:5px;
+      padding:10px 8px 22px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.4));
     }
-    .card.active { border-color: #e67e22; background:#fff5ee; }
-    .c-left { display:flex; align-items:center; gap:12px; }
-    .c-ico {
-      width:44px; height:44px; border-radius:12px;
-      background: linear-gradient(135deg, #f1c40f, #e67e22);
-      display:flex; align-items:center; justify-content:center; font-size:20px;
-      box-shadow: 0 3px 10px rgba(230,126,34,0.25);
-      overflow:hidden;
+    .nav button{
+      background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;padding:10px 3px;font-size:10px;font-weight:700;color:#e2e8f0;
+      cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;
     }
-    .c-ico svg { width:28px; height:28px; }
-    .c-info h4 { font-size:14px; font-weight:800; }
-    .c-info p { font-size:11px; color:var(--soft); margin-top:2px; }
-    .btn {
-      background: linear-gradient(135deg, #f39c12, #e67e22); color:#fff;
-      border:none; border-radius:12px; padding:9px 14px;
-      font-weight:800; font-size:12px; cursor:pointer; white-space:nowrap;
-      box-shadow: 0 4px 12px rgba(230,126,34,0.3);
-    }
-    .btn:disabled { background:#e0e0e0; color:#aaa; box-shadow:none; }
+    .nav button span{font-size:18px}
+    .nav button:active{transform:scale(0.93);background:rgba(241,196,15,0.15)}
 
-    .lb-row {
-      display:flex; align-items:center; gap:12px; padding:12px 14px;
-      background:#fffaf5; border:1.5px solid #fdebd0; border-radius:14px; margin-bottom:8px;
+    /* MODAL */
+    .overlay{
+      position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);
+      z-index:70;display:none;align-items:flex-end;justify-content:center;
     }
-    .lb-row.me { border-color:#e67e22; background:#fff5ee; }
-    .lb-rank {
-      width:28px; height:28px; border-radius:50%;
-      background: linear-gradient(135deg,#f1c40f,#e67e22); color:#fff;
-      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px;
+    .overlay.show{display:flex}
+    .modal{
+      background:#1a1a2e;width:100%;max-height:80%;border-radius:22px 22px 0 0;
+      padding:18px 14px 28px;overflow-y:auto;animation:slide .25s ease;
+      border-top:1px solid rgba(241,196,15,0.2);
     }
-    .lb-name { flex:1; font-weight:700; font-size:14px; }
-    .lb-score { font-weight:900; color:#d35400; font-size:14px; }
+    @keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+    .m-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .m-title{font-size:17px;font-weight:900;color:#f1c40f}
+    .x{width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:#fff;font-size:14px;cursor:pointer}
 
-    .toast {
-      position:absolute; top:58px; left:50%; transform:translateX(-50%);
-      background:rgba(45,52,54,0.95); color:#fff; padding:10px 18px; border-radius:40px;
-      font-size:13px; font-weight:600; z-index:90; opacity:0; transition:opacity 0.25s;
-      max-width:88%; text-align:center; pointer-events:none;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    .card{
+      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;padding:12px;margin-bottom:8px;
+      display:flex;align-items:center;justify-content:space-between;
     }
-    .toast.show { opacity:1; }
+    .card.active{border-color:rgba(241,196,15,0.5);background:rgba(241,196,15,0.08)}
+    .c-left{display:flex;align-items:center;gap:10px}
+    .c-ico{
+      width:40px;height:40px;border-radius:10px;
+      background:linear-gradient(135deg,#f1c40f,#e67e22);
+      display:flex;align-items:center;justify-content:center;font-size:18px;
+    }
+    .c-info h4{font-size:13px;font-weight:700;color:#fff}
+    .c-info p{font-size:11px;color:#a0aec0;margin-top:1px}
+    .btn{
+      background:linear-gradient(135deg,#f1c40f,#e67e22);color:#1a1a2e;
+      border:none;border-radius:10px;padding:8px 12px;font-weight:800;font-size:11px;cursor:pointer;
+    }
+    .btn:disabled{background:#333;color:#666}
 
-    .empty { text-align:center; padding:24px 12px; color:var(--soft); font-size:13px; line-height:1.5; }
+    .lb-row{
+      display:flex;align-items:center;gap:10px;padding:11px 12px;
+      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+      border-radius:12px;margin-bottom:7px;
+    }
+    .lb-row.me{border-color:rgba(241,196,15,0.5);background:rgba(241,196,15,0.1)}
+    .lb-rank{
+      width:26px;height:26px;border-radius:50%;
+      background:linear-gradient(135deg,#f1c40f,#e67e22);color:#1a1a2e;
+      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;
+    }
+    .lb-name{flex:1;font-weight:700;font-size:13px;color:#fff}
+    .lb-score{font-weight:900;color:#f1c40f;font-size:13px}
+
+    .toast{
+      position:absolute;top:55px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,0.85);color:#f1c40f;padding:9px 16px;border-radius:30px;
+      font-size:12px;font-weight:600;z-index:90;opacity:0;transition:opacity .25s;
+      max-width:88%;text-align:center;pointer-events:none;
+      border:1px solid rgba(241,196,15,0.3);
+    }
+    .toast.show{opacity:1}
+    .empty{text-align:center;padding:20px;color:#a0aec0;font-size:13px;line-height:1.5}
   </style>
 </head>
 <body>
 <div class="phone" id="app">
 
-  <!-- AUTH -->
+  <!-- SPLASH -->
   <div class="auth" id="auth">
-    <svg class="auth-beaver" viewBox="0 0 100 100">
-      <ellipse cx="50" cy="64" rx="30" ry="24" fill="#8B5A2B"/>
-      <circle cx="50" cy="42" r="26" fill="#A0522D"/>
-      <circle cx="39" cy="38" r="5" fill="#2d3436"/>
-      <circle cx="61" cy="38" r="5" fill="#2d3436"/>
-      <ellipse cx="50" cy="50" rx="7" ry="5" fill="#5D4037"/>
-      <path d="M30 32 Q25 20 34 24" stroke="#5D4037" stroke-width="4" fill="none"/>
-      <path d="M70 32 Q75 20 66 24" stroke="#5D4037" stroke-width="4" fill="none"/>
-      <ellipse cx="50" cy="82" rx="12" ry="7" fill="#6D4C41"/>
-    </svg>
+    <img class="auth-img" src="hero.png" alt="Borsuk" onerror="this.style.display='none'"/>
     <h1>Borsuk Coin</h1>
     <div class="sub">Твоя будущая крипто-монета<br>$BORSUK</div>
-    <input id="nick" type="text" placeholder="Ник (3–12 символов)" maxlength="12" />
+    <input id="nick" type="text" placeholder="Ник (3–12 символов)" maxlength="12"/>
     <button id="go">Создать аккаунт</button>
   </div>
 
-  <!-- HEADER -->
   <div class="header">
     <div class="logo">🦫 Borsuk Coin</div>
     <div class="user-btn" id="userBtn"><span>👤</span><span id="nickShow">—</span></div>
   </div>
 
-  <!-- STATS -->
   <div class="stats">
     <div class="row">
       <div class="coin-ico">🪙</div>
@@ -292,15 +223,21 @@
     </div>
   </div>
 
-  <!-- TAP -->
   <div class="zone" id="zone">
     <div class="combo" id="combo">COMBO</div>
     <div class="auto" id="auto">🤖 Авто</div>
-    <div class="char-wrap" id="char"></div>
-    <div class="hint" id="hint">Тапай!</div>
+
+    <!-- Персонаж -->
+    <div class="hero-wrap" id="hero">
+      <img src="hero.png" alt="hero" onerror="this.parentElement.innerHTML='🐷'"/>
+    </div>
+
+    <!-- Монетка для тапа -->
+    <div class="coin-btn" id="coinBtn">🪙</div>
+
+    <div class="hint" id="hint">Тапай по монете!</div>
   </div>
 
-  <!-- NAV -->
   <div class="nav">
     <button data-m="shop"><span>🛠</span>Магазин</button>
     <button data-m="loc"><span>🗺</span>Локации</button>
@@ -314,304 +251,209 @@
 </div>
 
 <script>
-// ===== SOUND =====
-let actx = null;
-function ensureAudio() {
-  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-  if (actx.state === "suspended") actx.resume();
-}
-function tone(freq, dur, type="square", vol=0.07) {
-  ensureAudio();
-  const o = actx.createOscillator();
-  const g = actx.createGain();
-  o.type = type;
-  o.frequency.value = freq;
-  g.gain.value = vol;
-  o.connect(g); g.connect(actx.destination);
-  o.start();
-  g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
-  o.stop(actx.currentTime + dur);
-}
-const sfx = {
-  tap()  { tone(380 + Math.random()*70, 0.05); setTimeout(() => tone(560, 0.03, "triangle", 0.04), 28); },
-  buy()  { tone(480, 0.08, "triangle", 0.09); setTimeout(() => tone(720, 0.1, "triangle", 0.07), 70); },
-  lvl()  { tone(360, 0.08); setTimeout(() => tone(540, 0.08), 90); setTimeout(() => tone(760, 0.12), 180); },
-  err()  { tone(150, 0.12, "sawtooth", 0.05); },
-  combo(){ tone(640, 0.06, "sine", 0.08); setTimeout(() => tone(860, 0.08, "sine", 0.06), 55); }
+// SOUND
+let actx=null;
+function ensureAudio(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume()}
+function tone(f,d,t="square",v=0.07){ensureAudio();const o=actx.createOscillator(),g=actx.createGain();o.type=t;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(actx.destination);o.start();g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+d);o.stop(actx.currentTime+d)}
+const sfx={
+  tap(){tone(400+Math.random()*60,0.05);setTimeout(()=>tone(580,0.03,"triangle",0.04),25)},
+  buy(){tone(500,0.08,"triangle",0.09);setTimeout(()=>tone(720,0.1,"triangle",0.07),70)},
+  lvl(){tone(360,0.08);setTimeout(()=>tone(540,0.08),90);setTimeout(()=>tone(760,0.12),180)},
+  err(){tone(150,0.12,"sawtooth",0.05)},
+  combo(){tone(640,0.06,"sine",0.08);setTimeout(()=>tone(860,0.08,"sine",0.06),55)}
 };
 
-// ===== SKINS (SVG) =====
-const SKIN_SVG = [
-  `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="64" rx="28" ry="22" fill="#8B5A2B"/><circle cx="50" cy="42" r="24" fill="#A0522D"/><circle cx="40" cy="38" r="4.5" fill="#2d3436"/><circle cx="60" cy="38" r="4.5" fill="#2d3436"/><ellipse cx="50" cy="48" rx="6" ry="4" fill="#5D4037"/><path d="M32 32 Q27 20 36 24" stroke="#5D4037" stroke-width="3.5" fill="none"/><path d="M68 32 Q73 20 64 24" stroke="#5D4037" stroke-width="3.5" fill="none"/></svg>`,
-  `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="64" rx="28" ry="22" fill="#DAA520"/><circle cx="50" cy="42" r="24" fill="#FFD700"/><circle cx="40" cy="38" r="4.5" fill="#2d3436"/><circle cx="60" cy="38" r="4.5" fill="#2d3436"/><ellipse cx="50" cy="48" rx="6" ry="4" fill="#B8860B"/><circle cx="50" cy="18" r="7" fill="#FFD700" stroke="#B8860B" stroke-width="2"/></svg>`,
-  `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="64" rx="28" ry="22" fill="#2c3e50"/><circle cx="50" cy="42" r="24" fill="#34495e"/><rect x="34" y="33" width="13" height="9" rx="2" fill="#00cec9"/><rect x="53" y="33" width="13" height="9" rx="2" fill="#00cec9"/><ellipse cx="50" cy="50" rx="5" ry="3" fill="#1abc9c"/></svg>`,
-  `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="66" rx="28" ry="22" fill="#8B5A2B"/><circle cx="50" cy="44" r="24" fill="#A0522D"/><circle cx="40" cy="40" r="4.5" fill="#2d3436"/><circle cx="60" cy="40" r="4.5" fill="#2d3436"/><rect x="26" y="20" width="48" height="14" rx="4" fill="#e67e22"/><rect x="34" y="16" width="32" height="8" rx="2" fill="#d35400"/></svg>`,
-  `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="64" rx="28" ry="22" fill="#6c5ce7"/><circle cx="50" cy="42" r="24" fill="#a29bfe"/><circle cx="40" cy="38" r="4.5" fill="#2d3436"/><circle cx="60" cy="38" r="4.5" fill="#2d3436"/><circle cx="26" cy="26" r="3" fill="#fff"/><circle cx="74" cy="22" r="2" fill="#fff"/></svg>`,
-  `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="64" rx="28" ry="22" fill="#c0392b"/><circle cx="50" cy="42" r="24" fill="#e74c3c"/><circle cx="40" cy="38" r="4.5" fill="#2d3436"/><circle cx="60" cy="38" r="4.5" fill="#2d3436"/><path d="M34 16 L42 28 L50 18 L58 28 L66 16 L60 32 L40 32 Z" fill="#f1c40f"/></svg>`
+const LOCS=[
+  {id:0,name:"Лес",emoji:"🌲",mult:1,cost:0},
+  {id:1,name:"Пещеры",emoji:"🪨",mult:1.2,cost:15000},
+  {id:2,name:"Вулкан",emoji:"🌋",mult:1.45,cost:45000},
+  {id:3,name:"Лёд",emoji:"❄️",mult:1.7,cost:100000},
+  {id:4,name:"Руины",emoji:"🏛",mult:2.0,cost:250000},
+  {id:5,name:"Космос",emoji:"🚀",mult:2.5,cost:600000}
 ];
-
-const SKINS = [
-  {id:0, name:"Классика", cost:0},
-  {id:1, name:"Золотой", cost:2500},
-  {id:2, name:"Кибер", cost:6000},
-  {id:3, name:"Шахтёр", cost:4000},
-  {id:4, name:"Космос", cost:12000},
-  {id:5, name:"Легенда", cost:25000}
-];
-
-const LOCS = [
-  {id:0, name:"Лес", emoji:"🌲", bg:["#ffeaa7","#fff9f0","#fdcb6e"], mult:1, cost:0},
-  {id:1, name:"Пещеры", emoji:"🪨", bg:["#dfe6e9","#b2bec3","#636e72"], mult:1.2, cost:15000},
-  {id:2, name:"Вулкан", emoji:"🌋", bg:["#fab1a0","#e17055","#d63031"], mult:1.45, cost:45000},
-  {id:3, name:"Лёд", emoji:"❄️", bg:["#74b9ff","#a29bfe","#dfe6e9"], mult:1.7, cost:100000},
-  {id:4, name:"Руины", emoji:"🏛", bg:["#ffeaa7","#fdcb6e","#e67e22"], mult:2.0, cost:250000},
-  {id:5, name:"Космос", emoji:"🚀", bg:["#2d3436","#6c5ce7","#a29bfe"], mult:2.5, cost:600000}
-];
-
-const TOOLS = {
-  pickaxe: {name:"Кирка", emoji:"⛏", base:800, pow:1},
-  drill:   {name:"Бур", emoji:"🔧", base:2500, pow:2},
-  excavator:{name:"Экскаватор", emoji:"🚜", base:7000, pow:4}
+const TOOLS={
+  pickaxe:{name:"Кирка",emoji:"⛏",base:800,pow:1},
+  drill:{name:"Бур",emoji:"🔧",base:2500,pow:2},
+  excavator:{name:"Экскаватор",emoji:"🚜",base:7000,pow:4}
 };
-
-const KEY = "borsuk_final_v2";
-let S = {
-  nick:"", coins:0, energy:50, maxE:50,
-  tools:{pickaxe:0, drill:0, excavator:0},
-  loc:0, unlockedLocs:[0],
-  skin:0, unlockedSkins:[0],
-  inv:{diamonds:0, gold:0, artifacts:0, maps:0, chests:0},
-  wallet:false, addr:"",
-  taps:0, combo:0, lastTap:0, autoUntil:0, lastEn:Date.now(),
+const KEY="borsuk_hero_v1";
+let S={
+  nick:"",coins:0,energy:50,maxE:50,
+  tools:{pickaxe:0,drill:0,excavator:0},
+  loc:0,unlockedLocs:[0],
+  inv:{diamonds:0,gold:0,artifacts:0,maps:0,chests:0},
+  wallet:false,addr:"",
+  taps:0,combo:0,lastTap:0,autoUntil:0,lastEn:Date.now(),
   registered:false
 };
 
-function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
-function load(){ try{ const r=localStorage.getItem(KEY); if(r) S={...S,...JSON.parse(r)}; }catch(e){} }
-
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function load(){try{const r=localStorage.getItem(KEY);if(r)S={...S,...JSON.parse(r)}}catch(e){}}
 function power(){
   const t=S.tools;
-  let p = 1 + LOCS[S.loc].mult * (1 + S.loc*0.4) + t.pickaxe*1 + t.drill*2 + t.excavator*4;
-  p += S.inv.diamonds*0.25 + S.inv.artifacts*0.4;
-  if(S.combo >= 8) p *= 1.25;
-  else if(S.combo >= 4) p *= 1.12;
-  return Math.max(1, Math.floor(p));
+  let p=1+LOCS[S.loc].mult*(1+S.loc*0.4)+t.pickaxe+t.drill*2+t.excavator*4;
+  p+=S.inv.diamonds*0.25+S.inv.artifacts*0.4;
+  if(S.combo>=8)p*=1.25;else if(S.combo>=4)p*=1.12;
+  return Math.max(1,Math.floor(p));
 }
-function cost(k){ return TOOLS[k].base + S.tools[k]*900; }
-function fmt(n){
-  if(n>=1e6) return (n/1e6).toFixed(1)+"M";
-  if(n>=1e3) return (n/1e3).toFixed(1)+"K";
-  return Math.floor(n)+"";
-}
-const $ = id => document.getElementById(id);
-
-function setSkin(){ $("char").innerHTML = SKIN_SVG[S.skin] || SKIN_SVG[0]; }
-function theme(){
-  const L = LOCS[S.loc];
-  $("app").style.background = `linear-gradient(165deg, ${L.bg[0]} 0%, ${L.bg[1]} 40%, ${L.bg[2]} 100%)`;
-}
+function cost(k){return TOOLS[k].base+S.tools[k]*900}
+function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+"M";if(n>=1e3)return(n/1e3).toFixed(1)+"K";return Math.floor(n)+""}
+const $=id=>document.getElementById(id);
 
 function ui(){
-  $("coins").textContent = fmt(S.coins);
-  $("locLabel").textContent = `${LOCS[S.loc].emoji} ${LOCS[S.loc].name} · Ур.${S.loc+1}`;
-  $("enFill").style.width = (S.energy/S.maxE*100)+"%";
-  $("enTxt").textContent = `⚡ ${Math.floor(S.energy)}/${S.maxE}`;
-  $("nickShow").textContent = S.nick || "—";
-  setSkin(); theme();
-  if(S.energy < 1){ $("char").classList.add("tired"); $("hint").textContent = "Устал..."; }
-  else { $("char").classList.remove("tired"); $("hint").textContent = "Тапай!"; }
-  const left = Math.max(0, Math.ceil((S.autoUntil - Date.now())/1000));
-  if(left > 0){ $("auto").textContent = `🤖 Авто ${left}с`; $("auto").classList.add("on"); }
+  $("coins").textContent=fmt(S.coins);
+  $("locLabel").textContent=`${LOCS[S.loc].emoji} ${LOCS[S.loc].name} · Ур.${S.loc+1}`;
+  $("enFill").style.width=(S.energy/S.maxE*100)+"%";
+  $("enTxt").textContent=`⚡ ${Math.floor(S.energy)}/${S.maxE}`;
+  $("nickShow").textContent=S.nick||"—";
+  if(S.energy<1)$("hint").textContent="Мало энергии...";
+  else $("hint").textContent="Тапай по монете!";
+  const left=Math.max(0,Math.ceil((S.autoUntil-Date.now())/1000));
+  if(left>0){$("auto").textContent=`🤖 Авто ${left}с`;$("auto").classList.add("on")}
   else $("auto").classList.remove("on");
 }
 
-function toast(m){
-  const t=$("toast"); t.textContent=m; t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"), 1600);
-}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1500)}
 function float(x,y,txt){
-  const e=document.createElement("div"); e.className="float"; e.textContent=txt;
-  e.style.left=x+"px"; e.style.top=y+"px"; $("zone").appendChild(e);
-  setTimeout(()=>e.remove(), 800);
+  const e=document.createElement("div");e.className="float";e.textContent=txt;
+  e.style.left=x+"px";e.style.top=y+"px";$("zone").appendChild(e);
+  setTimeout(()=>e.remove(),750);
 }
 
 function dig(auto=false){
   ensureAudio();
-  if(S.energy < 1 && !auto){ sfx.err(); toast("Мало энергии"); return; }
+  if(S.energy<1&&!auto){sfx.err();toast("Мало энергии");return}
   if(!auto){
-    const now = Date.now();
-    S.combo = (now - S.lastTap < 650) ? S.combo+1 : 1;
-    S.lastTap = now;
-    if(S.combo >= 4){
-      $("combo").textContent = `COMBO x${S.combo}`;
-      $("combo").classList.add("on");
-      if(S.combo % 4 === 0) sfx.combo();
-    } else $("combo").classList.remove("on");
-    S.energy = Math.max(0, S.energy-1);
+    const now=Date.now();
+    S.combo=(now-S.lastTap<650)?S.combo+1:1;
+    S.lastTap=now;
+    if(S.combo>=4){$("combo").textContent=`COMBO x${S.combo}`;$("combo").classList.add("on");if(S.combo%4===0)sfx.combo()}
+    else $("combo").classList.remove("on");
+    S.energy=Math.max(0,S.energy-1);
     sfx.tap();
   }
   S.taps++;
-  const g = power();
-  S.coins += g;
+  const g=power();S.coins+=g;
 
-  const c = $("char");
-  c.classList.add("pressed");
-  setTimeout(()=>c.classList.remove("pressed"), 75);
+  const btn=$("coinBtn");
+  btn.classList.add("pressed");
+  setTimeout(()=>btn.classList.remove("pressed"),70);
+  $("hero").classList.add("pressed");
+  setTimeout(()=>$("hero").classList.remove("pressed"),70);
 
-  const r = c.getBoundingClientRect(), a = $("zone").getBoundingClientRect();
-  float(r.left + r.width/2 - a.left + (Math.random()*28-14), r.top - a.top + 8, `+${g}`);
+  const r=btn.getBoundingClientRect(),a=$("zone").getBoundingClientRect();
+  float(r.left+r.width/2-a.left+(Math.random()*20-10),r.top-a.top-10,`+${g}`);
 
-  if(Math.random() < 0.05){
-    const keys = Object.keys(S.inv);
-    const k = keys[Math.floor(Math.random()*keys.length)];
-    S.inv[k]++;
-    toast(`+1 ${k}`);
+  if(Math.random()<0.05){
+    const keys=Object.keys(S.inv);const k=keys[Math.floor(Math.random()*keys.length)];
+    S.inv[k]++;toast(`+1 ${k}`);
   }
-  ui(); save();
+  ui();save();
 }
 
 function buyTool(k){
-  const c = cost(k);
-  if(S.coins < c){ sfx.err(); toast("Мало монет"); return; }
-  S.coins -= c; S.tools[k]++;
-  sfx.buy();
-  if(k === "drill"){
-    const sec = 12 + S.tools.drill * 8;
-    S.autoUntil = Math.max(S.autoUntil, Date.now()) + sec*1000;
-    toast(`Бур: авто ${sec}с`);
-  } else toast(`${TOOLS[k].name} ур.${S.tools[k]}`);
-  ui(); save(); open("shop");
+  const c=cost(k);if(S.coins<c){sfx.err();toast("Мало монет");return}
+  S.coins-=c;S.tools[k]++;sfx.buy();
+  if(k==="drill"){const sec=12+S.tools.drill*8;S.autoUntil=Math.max(S.autoUntil,Date.now())+sec*1000;toast(`Авто ${sec}с`)}
+  else toast(`${TOOLS[k].name} ур.${S.tools[k]}`);
+  ui();save();open("shop");
 }
 function buyLoc(id){
-  const L = LOCS[id];
-  if(S.unlockedLocs.includes(id)){ S.loc=id; sfx.lvl(); toast(L.name); ui(); save(); open("loc"); return; }
-  if(S.coins < L.cost){ sfx.err(); toast("Мало монет"); return; }
-  S.coins -= L.cost; S.unlockedLocs.push(id); S.loc = id;
-  sfx.lvl(); toast(`Открыто: ${L.name}`); ui(); save(); open("loc");
-}
-function buySkin(id){
-  const sk = SKINS[id];
-  if(S.unlockedSkins.includes(id)){ S.skin=id; sfx.buy(); toast(sk.name); ui(); save(); open("skin"); return; }
-  if(S.coins < sk.cost){ sfx.err(); toast("Мало монет"); return; }
-  S.coins -= sk.cost; S.unlockedSkins.push(id); S.skin = id;
-  sfx.buy(); toast(`Скин: ${sk.name}`); ui(); save(); open("skin");
+  const L=LOCS[id];
+  if(S.unlockedLocs.includes(id)){S.loc=id;sfx.lvl();toast(L.name);ui();save();open("loc");return}
+  if(S.coins<L.cost){sfx.err();toast("Мало монет");return}
+  S.coins-=L.cost;S.unlockedLocs.push(id);S.loc=id;sfx.lvl();toast("Открыто: "+L.name);ui();save();open("loc");
 }
 function useItem(k){
-  if(S.inv[k] < 1){ sfx.err(); toast("Нет"); return; }
+  if(S.inv[k]<1){sfx.err();toast("Нет");return}
   S.inv[k]--;
-  if(k==="chests"){ const r=60+Math.floor(Math.random()*100); S.coins+=r; toast(`+${r} монет`); }
-  else if(k==="gold"){ S.energy=Math.min(S.maxE, S.energy+8); toast("+8 энергии"); }
+  if(k==="chests"){const r=60+Math.floor(Math.random()*100);S.coins+=r;toast("+"+r+" монет")}
+  else if(k==="gold"){S.energy=Math.min(S.maxE,S.energy+8);toast("+8 энергии")}
   else toast("Бонус силы");
-  sfx.buy(); ui(); save(); open("more");
+  sfx.buy();ui();save();open("more");
 }
 function connectWallet(){
-  if(S.wallet){ toast(S.addr); return; }
-  S.wallet=true;
-  S.addr = "0xBORSUK" + Math.floor(10000+Math.random()*89999);
-  sfx.buy(); toast("Кошелёк $BORSUK готов"); ui(); save();
+  if(S.wallet){toast(S.addr);return}
+  S.wallet=true;S.addr="0xBORSUK"+Math.floor(10000+Math.random()*89999);
+  sfx.buy();toast("Кошелёк $BORSUK готов");ui();save();
 }
 
 function open(type){
-  let h = "";
+  let h="";
   if(type==="shop"){
-    h = `<div class="m-head"><div class="m-title">🛠 Магазин</div><button class="x" onclick="closeM()">✕</button></div>`;
+    h=`<div class="m-head"><div class="m-title">🛠 Магазин</div><button class="x" onclick="closeM()">✕</button></div>`;
     for(const k of Object.keys(TOOLS)){
-      const t=TOOLS[k], lv=S.tools[k], c=cost(k);
-      h += `<div class="card"><div class="c-left"><div class="c-ico">${t.emoji}</div><div class="c-info">
-        <h4>${t.name} · ${lv}</h4><p>+${t.pow} силы · ${fmt(c)} 🪙${k==="drill"?" · авто":""}</p></div></div>
+      const t=TOOLS[k],lv=S.tools[k],c=cost(k);
+      h+=`<div class="card"><div class="c-left"><div class="c-ico">${t.emoji}</div><div class="c-info">
+        <h4>${t.name} · ${lv}</h4><p>+${t.pow} · ${fmt(c)} 🪙${k==="drill"?" · авто":""}</p></div></div>
         <button class="btn" onclick="buyTool('${k}')" ${S.coins<c?"disabled":""}>Купить</button></div>`;
     }
   }
   if(type==="loc"){
-    h = `<div class="m-head"><div class="m-title">🗺 Локации</div><button class="x" onclick="closeM()">✕</button></div>`;
+    h=`<div class="m-head"><div class="m-title">🗺 Локации</div><button class="x" onclick="closeM()">✕</button></div>`;
     LOCS.forEach(L=>{
-      const unlocked=S.unlockedLocs.includes(L.id), cur=S.loc===L.id;
-      h += `<div class="card ${cur?"active":""}"><div class="c-left"><div class="c-ico">${L.emoji}</div><div class="c-info">
-        <h4>${L.name} ${cur?"✓":""}</h4><p>×${L.mult}${unlocked?"":" · "+fmt(L.cost)}</p></div></div>
-        <button class="btn" onclick="buyLoc(${L.id})">${unlocked?(cur?"Здесь":"Выбрать"):"Открыть"}</button></div>`;
+      const u=S.unlockedLocs.includes(L.id),cur=S.loc===L.id;
+      h+=`<div class="card ${cur?"active":""}"><div class="c-left"><div class="c-ico">${L.emoji}</div><div class="c-info">
+        <h4>${L.name} ${cur?"✓":""}</h4><p>×${L.mult}${u?"":" · "+fmt(L.cost)}</p></div></div>
+        <button class="btn" onclick="buyLoc(${L.id})">${u?(cur?"Здесь":"Выбрать"):"Открыть"}</button></div>`;
     });
   }
   if(type==="skin"){
-    h = `<div class="m-head"><div class="m-title">👕 Скины</div><button class="x" onclick="closeM()">✕</button></div>`;
-    SKINS.forEach(sk=>{
-      const unlocked=S.unlockedSkins.includes(sk.id), cur=S.skin===sk.id;
-      h += `<div class="card ${cur?"active":""}"><div class="c-left">
-        <div class="c-ico">${SKIN_SVG[sk.id]}</div>
-        <div class="c-info"><h4>${sk.name} ${cur?"✓":""}</h4><p>${unlocked?"Открыт":fmt(sk.cost)+" 🪙"}</p></div></div>
-        <button class="btn" onclick="buySkin(${sk.id})">${unlocked?(cur?"Надет":"Надеть"):"Купить"}</button></div>`;
-    });
+    h=`<div class="m-head"><div class="m-title">👕 Скины</div><button class="x" onclick="closeM()">✕</button></div>
+      <div class="empty">Скины появятся после запуска $BORSUK.<br>Сейчас главный герой — он.</div>`;
   }
   if(type==="top"){
-    h = `<div class="m-head"><div class="m-title">🏆 Рейтинг</div><button class="x" onclick="closeM()">✕</button></div>
-      <p style="font-size:12px;color:#636e72;margin-bottom:14px;text-align:center;line-height:1.45">
-        Сейчас только ты.<br>После запуска $BORSUK здесь будут реальные игроки.
-      </p>`;
-    if(S.registered && S.nick){
-      h += `<div class="lb-row me">
-        <div class="lb-rank">1</div>
-        <div class="lb-name">${S.nick} (ты)</div>
-        <div class="lb-score">${fmt(S.coins)}</div>
-      </div>`;
-    } else h += `<div class="empty">Войди, чтобы попасть в рейтинг</div>`;
+    h=`<div class="m-head"><div class="m-title">🏆 Рейтинг</div><button class="x" onclick="closeM()">✕</button></div>
+      <p class="empty">Пока только ты.<br>После запуска токена здесь будут реальные игроки.</p>`;
+    if(S.registered&&S.nick){
+      h+=`<div class="lb-row me"><div class="lb-rank">1</div><div class="lb-name">${S.nick} (ты)</div><div class="lb-score">${fmt(S.coins)}</div></div>`;
+    }
   }
   if(type==="more"){
-    h = `<div class="m-head"><div class="m-title">📦 Ещё</div><button class="x" onclick="closeM()">✕</button></div>`;
-    const names = {diamonds:"Алмазы",gold:"Золото",artifacts:"Артефакты",maps:"Карты",chests:"Сундуки"};
-    const icons = {diamonds:"💎",gold:"🟡",artifacts:"🏺",maps:"🗺",chests:"📦"};
+    h=`<div class="m-head"><div class="m-title">📦 Ещё</div><button class="x" onclick="closeM()">✕</button></div>`;
+    const names={diamonds:"Алмазы",gold:"Золото",artifacts:"Артефакты",maps:"Карты",chests:"Сундуки"};
+    const icons={diamonds:"💎",gold:"🟡",artifacts:"🏺",maps:"🗺",chests:"📦"};
     for(const k of Object.keys(S.inv)){
-      h += `<div class="card"><div class="c-left"><div class="c-ico">${icons[k]}</div>
-        <div class="c-info"><h4>${names[k]} ×${S.inv[k]}</h4>
-        <p>${k==="chests"?"Монеты":k==="gold"?"Энергия":"Сила"}</p></div></div>
+      h+=`<div class="card"><div class="c-left"><div class="c-ico">${icons[k]}</div><div class="c-info">
+        <h4>${names[k]} ×${S.inv[k]}</h4><p>${k==="chests"?"Монеты":k==="gold"?"Энергия":"Сила"}</p></div></div>
         <button class="btn" onclick="useItem('${k}')" ${S.inv[k]<1?"disabled":""}>Юз</button></div>`;
     }
-    h += `<div class="card" style="background:#2d3436;border-color:#444"><div class="c-left"><div class="c-ico">💼</div>
-      <div class="c-info"><h4 style="color:#fff">$BORSUK Wallet</h4>
-      <p style="color:#aaa">${S.wallet ? S.addr : "Не подключён"}</p></div></div>
+    h+=`<div class="card" style="background:rgba(241,196,15,0.08);border-color:rgba(241,196,15,0.3)"><div class="c-left"><div class="c-ico">💼</div>
+      <div class="c-info"><h4 style="color:#f1c40f">$BORSUK Wallet</h4><p>${S.wallet?S.addr:"Не подключён"}</p></div></div>
       <button class="btn" onclick="connectWallet()">${S.wallet?"✓":"Connect"}</button></div>`;
-    h += `<div class="card"><div class="c-left"><div class="c-ico">📊</div>
-      <div class="c-info"><h4>Стата</h4><p>Тапов: ${S.taps} · Сила: ${power()}</p></div></div></div>`;
+    h+=`<div class="card"><div class="c-left"><div class="c-ico">📊</div><div class="c-info"><h4>Стата</h4><p>Тапов: ${S.taps} · Сила: ${power()}</p></div></div></div>`;
   }
-  $("mod").innerHTML = h;
-  $("ov").classList.add("show");
+  $("mod").innerHTML=h;$("ov").classList.add("show");
 }
-function closeM(){ $("ov").classList.remove("show"); }
+function closeM(){$("ov").classList.remove("show")}
 
 function tick(){
-  const now = Date.now();
-  const pass = (now - S.lastEn)/1000;
-  if(pass >= 4 && S.energy < S.maxE){
-    S.energy = Math.min(S.maxE, S.energy + Math.floor(pass/4));
-    S.lastEn = now; ui(); save();
-  }
-  if(now - S.lastTap > 1300){ S.combo=0; $("combo").classList.remove("on"); }
-  if(S.autoUntil > now && S.energy >= 1) dig(true);
-  else ui();
+  const now=Date.now();
+  const pass=(now-S.lastEn)/1000;
+  if(pass>=4&&S.energy<S.maxE){S.energy=Math.min(S.maxE,S.energy+Math.floor(pass/4));S.lastEn=now;ui();save()}
+  if(now-S.lastTap>1300){S.combo=0;$("combo").classList.remove("on")}
+  if(S.autoUntil>now&&S.energy>=1)dig(true);else ui();
 }
 
 function doAuth(){
-  const n = $("nick").value.trim();
-  if(n.length < 3){ toast("Минимум 3 символа"); return; }
-  ensureAudio();
-  S.nick = n.slice(0,12);
-  S.registered = true;
-  save();
-  $("auth").classList.add("hide");
-  sfx.lvl();
-  toast(`Привет, ${S.nick}!`);
-  ui();
+  const n=$("nick").value.trim();
+  if(n.length<3){toast("Минимум 3 символа");return}
+  ensureAudio();S.nick=n.slice(0,12);S.registered=true;save();
+  $("auth").classList.add("hide");sfx.lvl();toast("Привет, "+S.nick+"!");ui();
 }
 
 load();
-if(S.registered && S.nick) $("auth").classList.add("hide");
+if(S.registered&&S.nick)$("auth").classList.add("hide");
 ui();
 
-$("go").onclick = doAuth;
-$("nick").onkeydown = e => { if(e.key==="Enter") doAuth(); };
-$("char").onpointerdown = () => dig(false);
-$("userBtn").onclick = () => open("top");
-document.querySelectorAll(".nav button").forEach(b => b.onclick = () => open(b.dataset.m));
-$("ov").onclick = e => { if(e.target === $("ov")) closeM(); };
-setInterval(tick, 1000);
+$("go").onclick=doAuth;
+$("nick").onkeydown=e=>{if(e.key==="Enter")doAuth()};
+$("coinBtn").onpointerdown=()=>dig(false);
+$("hero").onpointerdown=()=>dig(false);
+$("userBtn").onclick=()=>open("top");
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>open(b.dataset.m));
+$("ov").onclick=e=>{if(e.target===$("ov"))closeM()};
+setInterval(tick,1000);
 </script>
 </body>
 </html>
