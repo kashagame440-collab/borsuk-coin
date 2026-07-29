@@ -21,183 +21,232 @@
       background:radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, #0f0f1a 70%);
     }
 
-    /* SPLASH / AUTH */
+    /* AUTH / SPLASH */
     .auth{
       position:absolute;inset:0;z-index:100;
       background:radial-gradient(circle at 50% 30%, #2d1b4e 0%, #0a0a15 70%);
       display:flex;flex-direction:column;align-items:center;justify-content:center;
       padding:30px 24px;text-align:center;
     }
-    .auth.hide{display:none}
+    .auth.hide{display:none;pointer-events:none}
     .auth-img{
-      width:180px;height:180px;border-radius:50%;
-      object-fit:cover;border:4px solid rgba(241,196,15,0.5);
-      box-shadow:0 0 40px rgba(241,196,15,0.3),0 10px 30px rgba(0,0,0,0.5);
-      margin-bottom:20px;animation:pulse 2.5s ease-in-out infinite;
+      width:180px;height:180px;border-radius:50%;object-fit:cover;
+      border:4px solid rgba(241,196,15,0.55);
+      box-shadow:0 0 50px rgba(241,196,15,0.35),0 12px 30px rgba(0,0,0,0.5);
+      margin-bottom:22px;animation:floatPulse 2.8s ease-in-out infinite;
     }
-    @keyframes pulse{
-      0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(241,196,15,0.25)}
-      50%{transform:scale(1.04);box-shadow:0 0 50px rgba(241,196,15,0.45)}
+    @keyframes floatPulse{
+      0%,100%{transform:translateY(0) scale(1);box-shadow:0 0 40px rgba(241,196,15,0.3)}
+      50%{transform:translateY(-12px) scale(1.03);box-shadow:0 0 60px rgba(241,196,15,0.5)}
     }
-    .auth h1{font-size:28px;font-weight:900;color:#f1c40f;text-shadow:0 0 20px rgba(241,196,15,0.4)}
-    .auth .sub{color:#a0aec0;font-size:14px;margin:10px 0 26px;line-height:1.4}
+    .auth h1{font-size:30px;font-weight:900;color:#f1c40f;text-shadow:0 0 24px rgba(241,196,15,0.45);letter-spacing:-0.5px}
+    .auth .sub{color:#a0aec0;font-size:14px;margin:12px 0 28px;line-height:1.45}
     .auth input{
       width:100%;max-width:280px;padding:15px 18px;border:2px solid rgba(241,196,15,0.3);
       border-radius:16px;font-size:15px;font-weight:600;text-align:center;margin-bottom:14px;
-      background:rgba(255,255,255,0.08);color:#fff;outline:none;
+      background:rgba(255,255,255,0.07);color:#fff;outline:none;transition:border-color .2s;
     }
+    .auth input:focus{border-color:#f1c40f}
     .auth input::placeholder{color:#718096}
     .auth button{
       width:100%;max-width:280px;padding:15px;border:none;border-radius:16px;
       background:linear-gradient(135deg,#f1c40f,#e67e22);color:#1a1a2e;
       font-size:16px;font-weight:800;cursor:pointer;
-      box-shadow:0 6px 20px rgba(241,196,15,0.35);
+      box-shadow:0 8px 24px rgba(241,196,15,0.35);transition:transform .15s,box-shadow .15s;
     }
+    .auth button:active{transform:scale(0.97)}
 
     /* HEADER */
-    .header{padding:14px 16px 6px;display:flex;justify-content:space-between;align-items:center}
-    .logo{font-size:17px;font-weight:900;color:#f1c40f}
+    .header{padding:14px 16px 6px;display:flex;justify-content:space-between;align-items:center;z-index:10}
+    .logo{font-size:17px;font-weight:900;color:#f1c40f;letter-spacing:-0.3px}
     .user-btn{
-      background:rgba(255,255,255,0.08);border:1px solid rgba(241,196,15,0.25);
+      background:rgba(255,255,255,0.07);border:1px solid rgba(241,196,15,0.25);
       border-radius:30px;padding:6px 12px;font-size:12px;font-weight:700;color:#fff;
-      display:flex;align-items:center;gap:5px;cursor:pointer;
+      display:flex;align-items:center;gap:5px;cursor:pointer;transition:background .2s;
     }
+    .user-btn:active{background:rgba(241,196,15,0.15)}
 
     /* STATS */
     .stats{padding:0 16px 8px}
     .row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
     .coin-ico{
-      width:38px;height:38px;border-radius:50%;
+      width:40px;height:40px;border-radius:50%;
       background:linear-gradient(135deg,#f1c40f,#e67e22);
       display:flex;align-items:center;justify-content:center;font-size:18px;
-      box-shadow:0 0 12px rgba(241,196,15,0.4);
+      box-shadow:0 0 16px rgba(241,196,15,0.45);animation:coinGlow 2s ease-in-out infinite;
     }
-    .coins{font-size:24px;font-weight:900;color:#f1c40f}
+    @keyframes coinGlow{
+      0%,100%{box-shadow:0 0 12px rgba(241,196,15,0.4)}
+      50%{box-shadow:0 0 22px rgba(241,196,15,0.7)}
+    }
+    .coins{font-size:26px;font-weight:900;color:#f1c40f;letter-spacing:-0.5px;transition:transform .15s}
+    .coins.pop{animation:numPop .3s ease}
+    @keyframes numPop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
     .sub{font-size:11px;color:#a0aec0;font-weight:600}
     .bar{
-      background:rgba(255,255,255,0.08);border-radius:30px;height:22px;overflow:hidden;
+      background:rgba(255,255,255,0.07);border-radius:30px;height:24px;overflow:hidden;
       border:1px solid rgba(26,188,156,0.3);position:relative;
     }
-    .bar-fill{height:100%;background:linear-gradient(90deg,#1abc9c,#2ecc71);border-radius:30px;transition:width .3s}
-    .bar-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+    .bar-fill{height:100%;background:linear-gradient(90deg,#1abc9c,#2ecc71);border-radius:30px;transition:width .35s ease}
+    .bar-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
 
-    /* TAP ZONE */
+    /* ZONE */
     .zone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
-    .combo{position:absolute;top:6px;font-size:15px;font-weight:900;color:#f1c40f;opacity:0;transition:opacity .2s}
-    .combo.on{opacity:1}
-    .auto{position:absolute;top:36px;background:rgba(0,0,0,0.6);color:#f1c40f;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;opacity:0;transition:opacity .3s}
+    .combo{
+      position:absolute;top:8px;font-size:16px;font-weight:900;color:#f1c40f;
+      opacity:0;transform:scale(0.8);transition:all .25s;text-shadow:0 0 12px rgba(241,196,15,0.5);
+    }
+    .combo.on{opacity:1;transform:scale(1)}
+    .auto{
+      position:absolute;top:40px;background:rgba(0,0,0,0.65);color:#f1c40f;
+      font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;
+      opacity:0;transition:opacity .3s;border:1px solid rgba(241,196,15,0.3);
+    }
     .auto.on{opacity:1}
 
     .hero-wrap{
-      width:170px;height:170px;border-radius:50%;
+      width:160px;height:160px;border-radius:50%;
       border:4px solid rgba(241,196,15,0.5);
-      box-shadow:0 0 30px rgba(241,196,15,0.25),0 8px 24px rgba(0,0,0,0.4);
-      overflow:hidden;cursor:pointer;transition:transform .08s;
+      box-shadow:0 0 35px rgba(241,196,15,0.3),0 10px 28px rgba(0,0,0,0.45);
+      overflow:hidden;cursor:pointer;transition:transform .1s cubic-bezier(.2,.9,.3,1.2);
       position:relative;z-index:5;
     }
     .hero-wrap img{width:100%;height:100%;object-fit:cover}
-    .hero-wrap:active,.hero-wrap.pressed{transform:scale(0.9)}
+    .hero-wrap:active,.hero-wrap.pressed{transform:scale(0.88)}
+    .hero-wrap.bounce{animation:heroBounce .4s ease}
+
+    @keyframes heroBounce{
+      0%{transform:scale(1)}
+      30%{transform:scale(0.85)}
+      60%{transform:scale(1.08)}
+      100%{transform:scale(1)}
+    }
 
     .coin-btn{
-      margin-top:18px;width:90px;height:90px;border-radius:50%;
-      background:linear-gradient(145deg,#f1c40f,#e67e22);
-      border:4px solid #fff3;
-      box-shadow:0 0 25px rgba(241,196,15,0.45),inset 0 -6px 12px rgba(0,0,0,0.15);
+      margin-top:20px;width:100px;height:100px;border-radius:50%;
+      background:linear-gradient(145deg,#ffd700,#e67e22);
+      border:5px solid rgba(255,255,255,0.25);
+      box-shadow:0 0 30px rgba(241,196,15,0.5),inset 0 -8px 16px rgba(0,0,0,0.2);
       display:flex;align-items:center;justify-content:center;
-      font-size:42px;cursor:pointer;transition:transform .08s;
-      position:relative;z-index:6;
+      font-size:48px;cursor:pointer;transition:transform .1s;
+      position:relative;z-index:6;animation:coinFloat 3s ease-in-out infinite;
     }
-    .coin-btn:active,.coin-btn.pressed{transform:scale(0.88)}
+    @keyframes coinFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+    .coin-btn:active,.coin-btn.pressed{transform:scale(0.85);animation:none}
+    .coin-btn.spin{animation:coinSpin .5s ease}
 
-    .hint{margin-top:14px;font-size:13px;font-weight:600;color:#a0aec0}
+    @keyframes coinSpin{
+      0%{transform:rotateY(0) scale(1)}
+      50%{transform:rotateY(180deg) scale(1.1)}
+      100%{transform:rotateY(360deg) scale(1)}
+    }
+
+    .hint{margin-top:16px;font-size:13px;font-weight:600;color:#a0aec0;transition:opacity .3s}
 
     .float{
-      position:absolute;font-size:18px;font-weight:800;color:#f1c40f;
-      pointer-events:none;animation:up .75s ease-out forwards;z-index:20;
-      text-shadow:0 0 8px rgba(241,196,15,0.5);
+      position:absolute;font-size:20px;font-weight:900;color:#f1c40f;
+      pointer-events:none;animation:floatUp .8s ease-out forwards;z-index:20;
+      text-shadow:0 0 10px rgba(241,196,15,0.6);
     }
-    @keyframes up{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-90px) scale(1.3)}}
+    @keyframes floatUp{
+      0%{opacity:1;transform:translateY(0) scale(1)}
+      100%{opacity:0;transform:translateY(-100px) scale(1.4)}
+    }
+
+    .particle{
+      position:absolute;width:8px;height:8px;border-radius:50%;
+      pointer-events:none;z-index:15;animation:part .7s ease-out forwards;
+    }
+    @keyframes part{
+      0%{opacity:1;transform:translate(0,0) scale(1)}
+      100%{opacity:0;transform:translate(var(--x),var(--y)) scale(0.2)}
+    }
 
     /* NAV */
     .nav{
-      display:grid;grid-template-columns:repeat(5,1fr);gap:5px;
-      padding:10px 8px 22px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.4));
+      display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+      padding:10px 8px 24px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.45));
     }
     .nav button{
-      background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.08);
-      border-radius:14px;padding:10px 3px;font-size:10px;font-weight:700;color:#e2e8f0;
-      cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;
+      background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;padding:11px 3px;font-size:10px;font-weight:700;color:#e2e8f0;
+      cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
+      transition:all .15s;
     }
-    .nav button span{font-size:18px}
-    .nav button:active{transform:scale(0.93);background:rgba(241,196,15,0.15)}
+    .nav button span{font-size:20px}
+    .nav button:active{transform:scale(0.92);background:rgba(241,196,15,0.18);border-color:rgba(241,196,15,0.3)}
 
     /* MODAL */
     .overlay{
-      position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);
+      position:absolute;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);
       z-index:70;display:none;align-items:flex-end;justify-content:center;
     }
     .overlay.show{display:flex}
     .modal{
-      background:#1a1a2e;width:100%;max-height:80%;border-radius:22px 22px 0 0;
-      padding:18px 14px 28px;overflow-y:auto;animation:slide .25s ease;
+      background:#16162a;width:100%;max-height:82%;
+      border-radius:24px 24px 0 0;padding:20px 16px 32px;overflow-y:auto;
+      animation:slideUp .3s cubic-bezier(.2,.9,.3,1);
       border-top:1px solid rgba(241,196,15,0.2);
     }
-    @keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
-    .m-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-    .m-title{font-size:17px;font-weight:900;color:#f1c40f}
-    .x{width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:#fff;font-size:14px;cursor:pointer}
+    @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+    .m-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .m-title{font-size:18px;font-weight:900;color:#f1c40f}
+    .x{width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:#fff;font-size:15px;cursor:pointer}
 
     .card{
       background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
-      border-radius:14px;padding:12px;margin-bottom:8px;
-      display:flex;align-items:center;justify-content:space-between;
+      border-radius:14px;padding:13px 14px;margin-bottom:9px;
+      display:flex;align-items:center;justify-content:space-between;transition:border-color .2s;
     }
-    .card.active{border-color:rgba(241,196,15,0.5);background:rgba(241,196,15,0.08)}
-    .c-left{display:flex;align-items:center;gap:10px}
+    .card.active{border-color:rgba(241,196,15,0.5);background:rgba(241,196,15,0.1)}
+    .c-left{display:flex;align-items:center;gap:11px}
     .c-ico{
-      width:40px;height:40px;border-radius:10px;
+      width:42px;height:42px;border-radius:11px;
       background:linear-gradient(135deg,#f1c40f,#e67e22);
-      display:flex;align-items:center;justify-content:center;font-size:18px;
+      display:flex;align-items:center;justify-content:center;font-size:19px;
     }
     .c-info h4{font-size:13px;font-weight:700;color:#fff}
-    .c-info p{font-size:11px;color:#a0aec0;margin-top:1px}
+    .c-info p{font-size:11px;color:#a0aec0;margin-top:2px}
     .btn{
       background:linear-gradient(135deg,#f1c40f,#e67e22);color:#1a1a2e;
-      border:none;border-radius:10px;padding:8px 12px;font-weight:800;font-size:11px;cursor:pointer;
+      border:none;border-radius:11px;padding:9px 13px;font-weight:800;font-size:12px;cursor:pointer;
+      box-shadow:0 4px 12px rgba(241,196,15,0.25);
     }
-    .btn:disabled{background:#333;color:#666}
+    .btn:disabled{background:#333;color:#666;box-shadow:none}
 
     .lb-row{
-      display:flex;align-items:center;gap:10px;padding:11px 12px;
+      display:flex;align-items:center;gap:12px;padding:13px 14px;
       background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
-      border-radius:12px;margin-bottom:7px;
+      border-radius:14px;margin-bottom:8px;
     }
-    .lb-row.me{border-color:rgba(241,196,15,0.5);background:rgba(241,196,15,0.1)}
+    .lb-row.me{border-color:rgba(241,196,15,0.55);background:rgba(241,196,15,0.12)}
     .lb-rank{
-      width:26px;height:26px;border-radius:50%;
+      width:28px;height:28px;border-radius:50%;
       background:linear-gradient(135deg,#f1c40f,#e67e22);color:#1a1a2e;
-      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;
+      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;
     }
-    .lb-name{flex:1;font-weight:700;font-size:13px;color:#fff}
-    .lb-score{font-weight:900;color:#f1c40f;font-size:13px}
+    .lb-name{flex:1;font-weight:700;font-size:14px;color:#fff}
+    .lb-score{font-weight:900;color:#f1c40f;font-size:14px}
 
     .toast{
-      position:absolute;top:55px;left:50%;transform:translateX(-50%);
-      background:rgba(0,0,0,0.85);color:#f1c40f;padding:9px 16px;border-radius:30px;
-      font-size:12px;font-weight:600;z-index:90;opacity:0;transition:opacity .25s;
+      position:absolute;top:58px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,0.88);color:#f1c40f;padding:10px 18px;border-radius:40px;
+      font-size:13px;font-weight:600;z-index:90;opacity:0;transition:opacity .25s;
       max-width:88%;text-align:center;pointer-events:none;
-      border:1px solid rgba(241,196,15,0.3);
+      border:1px solid rgba(241,196,15,0.35);box-shadow:0 6px 20px rgba(0,0,0,0.3);
     }
     .toast.show{opacity:1}
-    .empty{text-align:center;padding:20px;color:#a0aec0;font-size:13px;line-height:1.5}
+    .empty{text-align:center;padding:22px 14px;color:#a0aec0;font-size:13px;line-height:1.5}
   </style>
 </head>
 <body>
 <div class="phone" id="app">
 
-  <!-- SPLASH -->
   <div class="auth" id="auth">
-    <img class="auth-img" src="hero.png" alt="Borsuk" onerror="this.style.display='none'"/>
+    <img class="auth-img" src="hero.png" alt="Borsuk" onerror="this.src='hero.png.jpg'"/>
     <h1>Borsuk Coin</h1>
     <div class="sub">Твоя будущая крипто-монета<br>$BORSUK</div>
     <input id="nick" type="text" placeholder="Ник (3–12 символов)" maxlength="12"/>
@@ -227,14 +276,11 @@
     <div class="combo" id="combo">COMBO</div>
     <div class="auto" id="auto">🤖 Авто</div>
 
-    <!-- Персонаж -->
     <div class="hero-wrap" id="hero">
-      <img src="hero.png" alt="hero" onerror="this.parentElement.innerHTML='🐷'"/>
+      <img src="hero.png" alt="hero" onerror="this.src='hero.png.jpg'"/>
     </div>
 
-    <!-- Монетка для тапа -->
     <div class="coin-btn" id="coinBtn">🪙</div>
-
     <div class="hint" id="hint">Тапай по монете!</div>
   </div>
 
@@ -251,18 +297,19 @@
 </div>
 
 <script>
-// SOUND
+// ===== SOUND =====
 let actx=null;
 function ensureAudio(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume()}
 function tone(f,d,t="square",v=0.07){ensureAudio();const o=actx.createOscillator(),g=actx.createGain();o.type=t;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(actx.destination);o.start();g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+d);o.stop(actx.currentTime+d)}
 const sfx={
-  tap(){tone(400+Math.random()*60,0.05);setTimeout(()=>tone(580,0.03,"triangle",0.04),25)},
-  buy(){tone(500,0.08,"triangle",0.09);setTimeout(()=>tone(720,0.1,"triangle",0.07),70)},
-  lvl(){tone(360,0.08);setTimeout(()=>tone(540,0.08),90);setTimeout(()=>tone(760,0.12),180)},
-  err(){tone(150,0.12,"sawtooth",0.05)},
-  combo(){tone(640,0.06,"sine",0.08);setTimeout(()=>tone(860,0.08,"sine",0.06),55)}
+  tap(){tone(420+Math.random()*50,0.05);setTimeout(()=>tone(600,0.03,"triangle",0.04),25)},
+  buy(){tone(520,0.08,"triangle",0.09);setTimeout(()=>tone(760,0.1,"triangle",0.07),70)},
+  lvl(){tone(380,0.08);setTimeout(()=>tone(560,0.08),90);setTimeout(()=>tone(800,0.12),180)},
+  err(){tone(160,0.12,"sawtooth",0.05)},
+  combo(){tone(680,0.06,"sine",0.08);setTimeout(()=>tone(900,0.08,"sine",0.06),50)}
 };
 
+// ===== DATA =====
 const LOCS=[
   {id:0,name:"Лес",emoji:"🌲",mult:1,cost:0},
   {id:1,name:"Пещеры",emoji:"🪨",mult:1.2,cost:15000},
@@ -301,23 +348,36 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+"M";if(n>=1e3)return(n/1e3).t
 const $=id=>document.getElementById(id);
 
 function ui(){
-  $("coins").textContent=fmt(S.coins);
+  const el=$("coins");
+  const old=el.textContent;
+  el.textContent=fmt(S.coins);
+  if(old!==el.textContent){el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop")}
   $("locLabel").textContent=`${LOCS[S.loc].emoji} ${LOCS[S.loc].name} · Ур.${S.loc+1}`;
   $("enFill").style.width=(S.energy/S.maxE*100)+"%";
   $("enTxt").textContent=`⚡ ${Math.floor(S.energy)}/${S.maxE}`;
   $("nickShow").textContent=S.nick||"—";
-  if(S.energy<1)$("hint").textContent="Мало энергии...";
-  else $("hint").textContent="Тапай по монете!";
+  $("hint").textContent=S.energy<1?"Мало энергии...":"Тапай по монете!";
   const left=Math.max(0,Math.ceil((S.autoUntil-Date.now())/1000));
   if(left>0){$("auto").textContent=`🤖 Авто ${left}с`;$("auto").classList.add("on")}
   else $("auto").classList.remove("on");
 }
 
-function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1500)}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1600)}
 function float(x,y,txt){
   const e=document.createElement("div");e.className="float";e.textContent=txt;
   e.style.left=x+"px";e.style.top=y+"px";$("zone").appendChild(e);
-  setTimeout(()=>e.remove(),750);
+  setTimeout(()=>e.remove(),800);
+}
+function particles(cx,cy){
+  const cols=["#f1c40f","#e67e22","#ffd700","#fff","#1abc9c"];
+  for(let i=0;i<8;i++){
+    const p=document.createElement("div");p.className="particle";
+    p.style.left=cx+"px";p.style.top=cy+"px";p.style.background=cols[i%cols.length];
+    const a=Math.PI*2*i/8,d=40+Math.random()*50;
+    p.style.setProperty("--x",Math.cos(a)*d+"px");
+    p.style.setProperty("--y",Math.sin(a)*d+"px");
+    $("zone").appendChild(p);setTimeout(()=>p.remove(),700);
+  }
 }
 
 function dig(auto=false){
@@ -335,14 +395,16 @@ function dig(auto=false){
   S.taps++;
   const g=power();S.coins+=g;
 
-  const btn=$("coinBtn");
-  btn.classList.add("pressed");
-  setTimeout(()=>btn.classList.remove("pressed"),70);
-  $("hero").classList.add("pressed");
-  setTimeout(()=>$("hero").classList.remove("pressed"),70);
+  // animations
+  const btn=$("coinBtn"), hero=$("hero");
+  btn.classList.add("pressed","spin");
+  hero.classList.add("pressed","bounce");
+  setTimeout(()=>{btn.classList.remove("pressed","spin");hero.classList.remove("pressed","bounce")},450);
 
   const r=btn.getBoundingClientRect(),a=$("zone").getBoundingClientRect();
-  float(r.left+r.width/2-a.left+(Math.random()*20-10),r.top-a.top-10,`+${g}`);
+  const cx=r.left+r.width/2-a.left, cy=r.top-a.top;
+  float(cx+(Math.random()*24-12),cy-5,`+${g}`);
+  particles(cx,cy+30);
 
   if(Math.random()<0.05){
     const keys=Object.keys(S.inv);const k=keys[Math.floor(Math.random()*keys.length)];
@@ -396,50 +458,34 @@ function open(type){
       h+=`<div class="card ${cur?"active":""}"><div class="c-left"><div class="c-ico">${L.emoji}</div><div class="c-info">
         <h4>${L.name} ${cur?"✓":""}</h4><p>×${L.mult}${u?"":" · "+fmt(L.cost)}</p></div></div>
         <button class="btn" onclick="buyLoc(${L.id})">${u?(cur?"Здесь":"Выбрать"):"Открыть"}</button></div>`;
-    });if(type==="top"){
-  h = `<div class="m-head">
-        <div class="m-title">🏆 Рейтинг Borsuk Coin</div>
-        <button class="x" onclick="closeM()">✕</button>
-      </div>`;
-
-  if(S.registered && S.nick){
-    h += `
-      <div style="text-align:center;margin-bottom:18px;">
-        <div style="font-size:13px;color:#a0aec0;margin-bottom:6px;">Твоя позиция</div>
-        <div class="lb-row me" style="max-width:100%;margin:0 auto;">
-          <div class="lb-rank">1</div>
-          <div class="lb-name">${S.nick}</div>
-          <div class="lb-score">${fmt(S.coins)} 🪙</div>
-        </div>
-      </div>
-
-      <div style="background:rgba(241,196,15,0.08);border:1px solid rgba(241,196,15,0.25);border-radius:14px;padding:14px;margin-bottom:16px;">
-        <div style="font-size:13px;font-weight:700;color:#f1c40f;margin-bottom:6px;">Скоро здесь будут другие</div>
-        <div style="font-size:12px;color:#a0aec0;line-height:1.45;">
-          После запуска токена <b>$BORSUK</b> рейтинг станет общим.<br>
-          Друзья смогут регистрироваться и попадать в топ.
-        </div>
-      </div>
-
-      <div style="font-size:11px;color:#718096;text-align:center;">
-        Сейчас рейтинг локальный • твой прогресс сохранён
-      </div>`;
-  } else {
-    h += `<div class="empty">
-            Войди в аккаунт,<br>чтобы попасть в рейтинг
-          </div>`;
-  }
-}
+    });
   }
   if(type==="skin"){
     h=`<div class="m-head"><div class="m-title">👕 Скины</div><button class="x" onclick="closeM()">✕</button></div>
       <div class="empty">Скины появятся после запуска $BORSUK.<br>Сейчас главный герой — он.</div>`;
   }
   if(type==="top"){
-    h=`<div class="m-head"><div class="m-title">🏆 Рейтинг</div><button class="x" onclick="closeM()">✕</button></div>
-      <p class="empty">Пока только ты.<br>После запуска токена здесь будут реальные игроки.</p>`;
+    h=`<div class="m-head"><div class="m-title">🏆 Рейтинг Borsuk Coin</div><button class="x" onclick="closeM()">✕</button></div>`;
     if(S.registered&&S.nick){
-      h+=`<div class="lb-row me"><div class="lb-rank">1</div><div class="lb-name">${S.nick} (ты)</div><div class="lb-score">${fmt(S.coins)}</div></div>`;
+      h+=`
+        <div style="text-align:center;margin-bottom:18px">
+          <div style="font-size:12px;color:#a0aec0;margin-bottom:8px">Твоя позиция прямо сейчас</div>
+          <div class="lb-row me">
+            <div class="lb-rank">1</div>
+            <div class="lb-name">${S.nick}</div>
+            <div class="lb-score">${fmt(S.coins)} 🪙</div>
+          </div>
+        </div>
+        <div style="background:rgba(241,196,15,0.08);border:1px solid rgba(241,196,15,0.25);border-radius:14px;padding:14px;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:700;color:#f1c40f;margin-bottom:6px">Скоро здесь будут другие</div>
+          <div style="font-size:12px;color:#a0aec0;line-height:1.5">
+            После запуска токена <b style="color:#f1c40f">$BORSUK</b> рейтинг станет общим.<br>
+            Друзья смогут регистрироваться и попадать в топ.
+          </div>
+        </div>
+        <div style="font-size:11px;color:#718096;text-align:center">Сейчас рейтинг локальный • прогресс сохранён</div>`;
+    } else {
+      h+=`<div class="empty">Войди в аккаунт,<br>чтобы попасть в рейтинг</div>`;
     }
   }
   if(type==="more"){
